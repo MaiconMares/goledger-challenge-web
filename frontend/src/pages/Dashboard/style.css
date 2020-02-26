@@ -1,0 +1,64 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.dashboard-header {
+    margin-top: 10px;
+    color:  #a9afbbd1;
+}
+
+.dashboard-header span {
+    font-size: 1.2em;
+}
+
+.contacts-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #202940;
+    border-radius: 5px;
+    padding: 0 10px;
+    color: #a9afbbd1;
+    margin-bottom: 10px;
+}
+
+.contacts-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.contacts-info h5 {
+    margin-left: 10px;
+}
+
+.contacts-body h1 {
+    align-self: center;
+    color: #7b1fa2;
+    font-weight: bold;
+}
+
+.contacts-footer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    border-top: 1px solid rgba(169,175,187, 0.2);
+}
+
+.contacts-footer i {
+    color: #288c6c;
+}
+
+.contacts-footer i span {
+    margin-left: 5px;
+}
+
+.contacts-footer span {
+    margin-left: 10px;
+}

@@ -1,0 +1,5 @@
+.interface {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #212529;
+}

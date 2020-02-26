@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./style.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faAddressBook, faUser, faAlignLeft, faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
+import { faHome, faAddressBook, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);

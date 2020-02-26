@@ -22,6 +22,7 @@ p {
     background-image: url('../../assets/images/bg1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     min-height: 400px;
 }
 
