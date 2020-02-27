@@ -1,0 +1,96 @@
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.contacts-body {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.contacts-header {
+    margin-top: 15px;
+    color: #a9afbbd1;
+}
+
+.simple-contacts {
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.simple-contacts, .company-contacts {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.simple-contacts ul, .company-contacts ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+}
+
+.simple-contacts ul li, .company-contacts ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    min-height: 40px;
+    color: #a9afbbd1;
+    border-radius: 5px;
+    background-color: #202940;
+}
+
+.simple-contacts .contact-photo, .company-contacts .contact-photo {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.contact-info-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.simple-contacts .contact-info, .company-contacts .contact-info {
+    display: flex;
+    margin-left: 10px;
+}
+
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.contact-actions-edit {
+    color: #288c6c;
+}
+
+.contact-actions-edit:hover {
+    color: #4ea752;
+    font-size: 20px;
+}
+
+.contact-actions-delete {
+    color: #a11703;
+}
+
+.contact-actions-delete:hover {
+    cursor: pointer;
+    color: #d62106;
+    font-size: 20px;
+}
+
+.contact-actions-favorite {
+    font-size: 18px;
+    color: #cfb742;
+}
+
+.contact-actions-favorite:hover {
+    font-size: 20px;
+    color: #f5d849;
+}
