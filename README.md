@@ -2,10 +2,16 @@
 ## About
 An application built with ReactJS, HTML5, CSS3, Axios and other libraries. It's a responsive web application that works well in desktops and notebooks as also in mobile phones much small. The purpose of this app is win the GoLedger Challenge and learn more about software development.
 ## Application working in image below.
-<img src="./frontend/src/assets/images/screen1.gif">
-<img src="./frontend/src/assets/images/screen2.gif">
+<p align="center">
+  <img width="460" src="./frontend/src/assets/images/screen1.gif"/>
+</p>
+<p align="center">
+  <img width="460" src="./frontend/src/assets/images/screen2.gif"/>
+</p>
 <h3>A responsive application made for large and small screens:</h3>
-<img src="./frontend/src/assets/images/screen3.gif">
+<p align="center">
+  <img width="460" src="./frontend/src/assets/images/screen3.gif"/>
+</p>
 
 ## Getting started
 ### Prerequisites
