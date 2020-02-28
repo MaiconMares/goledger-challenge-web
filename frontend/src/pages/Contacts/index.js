@@ -15,8 +15,10 @@ import {
     faLink,
     faSearch, 
 } from "@fortawesome/free-solid-svg-icons";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import api from '../../services/api.js';
 import "./style.css";
+import 'react-notifications/lib/notifications.css';
 
 function Contacts(props) {
     const [contacts, setContacts] = useState([]);
@@ -72,10 +74,17 @@ function Contacts(props) {
             "name": name
         }
         const response = await api.delete('/delete', { data });
+
+        if (response.status === 200) {  
+            NotificationManager.warning('Warning message', 'exclusion sucessfull!');
+        } else {
+            NotificationManager.error('An unknown error occurred during exclusion!');
+        }
     }
 
     return (
-        <>
+        <>  
+            <NotificationContainer/>
             {formIsOpen ? <ContactForm/> : null}
             {formEditIsOpen ? 
                 <EditContact formType={contactForm} contactData={contactWillEdit}/> : null}
@@ -317,24 +326,33 @@ function ContactForm(props) {
             "email": contactEmail,
             "age": Number(contactAge)
         }
+
+        if (!(contactName && contactPhone && companyPhone)) {
+            NotificationManager.error('Error message', 'Phone and name are required fields!');
+            return setTimeout(() => window.location.reload(), 2000);
+        }
+
         try {
             const response = await api.post('/create', data);
             if (response.status === 200) {
                 setLoading(false);
-            } if (response.status === 409) {
+
+                NotificationManager.success('Sucess message', 'Contact Registered!');
+            } else if (response.status === 409) {
                 throw {
                     name: "Conflict in register",
                     message: "This contact was already registered!"
                 }
             }
         } catch(error) {
-            console.log(error);
+            NotificationManager.error('Error message', 'This contact was already registered or another unknown problem has occurred!');
+            console.log(error.status);
             console.log('Problema!');
             setLoading(false);
         }
 
         setIsOpen(false);
-        setTimeout(() => window.location.reload(), 2000);
+        setTimeout(() => window.location.reload(), 3000);
     }
 
     async function handleSubmitCompany(event) {
@@ -350,11 +368,18 @@ function ContactForm(props) {
             "nemployees": Number(companyNEmployess)
         }
 
+        if (!(companyAddress && companyName && companyPhone)) {
+            NotificationManager.error('Error message', 'Address, name and phone are required fields!');
+            return setTimeout(() => window.location.reload(), 2000);
+        }
+
         try {
             const response = await api.post('/create', data);
             if (response.status === 200) {
                 setLoading(false);
                 props.showChild = false;
+
+                NotificationManager.success('Sucess message', 'Company contact Registered!');
             } if (response.status === 409) {
                 throw {
                     name: "Conflict in register",
@@ -368,7 +393,8 @@ function ContactForm(props) {
             //Mostrar mensagem de erro.
         }
 
-        setTimeout(() => window.location.reload(), 1500);
+        NotificationManager.error('Error message', 'This contact was already registered or another unknown problem has occurred!');
+        setTimeout(() => window.location.reload(), 2000);
     }
 
     return (
@@ -582,6 +608,8 @@ function EditContact(props) {
             const response = await api.put('/update', data);
             if (response.status === 200) {
                 setLoading(false);
+
+                NotificationManager.success('Sucess message', 'Contact updated successfully!');
             } if (response.status === 409) {
                 throw {
                     name: "Conflict in register",
@@ -589,12 +617,13 @@ function EditContact(props) {
                 }
             }
         } catch(error) {
+            NotificationManager.error('Error message', 'Problably you passed an uncorret or not registered name contact!');
             console.log(error);
             console.log('Problema!');
             setLoading(false);
         }
 
-        setTimeout(() => window.location.reload(), 500);
+        setTimeout(() => window.location.reload(), 2000);
     }
 
     async function handleSubmitCompany(event) {
@@ -615,6 +644,9 @@ function EditContact(props) {
             if (response.status === 200) {
                 setLoading(false);
                 props.showChild = false;
+
+                NotificationManager.success('Sucess message', 'Company contact updated successfully!');
+
             } if (response.status === 409) {
                 throw {
                     name: "Conflict in register",
@@ -626,9 +658,11 @@ function EditContact(props) {
             console.log('Problema!');
             setLoading(false);
             //Mostrar mensagem de erro.
+
+            NotificationManager.error('Error message', 'Problably you passed an uncorret or not registered name contact!');
         }
 
-        setTimeout(() => window.location.reload(), 500);
+        setTimeout(() => window.location.reload(), 2000);
     }
 
     return (
