@@ -122,6 +122,12 @@ p {
     outline: none;
 }
 
+@media (max-width: 380px) {
+    #sidebar {
+        max-width: 80px;
+    }
+}
+
 @media (max-width: 768px) {
     #sidebar.active {
         min-width: 80px;
