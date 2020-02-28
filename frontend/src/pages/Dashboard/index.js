@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 import api from "../../services/api";
 import video from "./../../assets/videos/background.mp4";

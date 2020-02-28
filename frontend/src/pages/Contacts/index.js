@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from 'react-spinner-material';
 import { 
@@ -7,7 +7,6 @@ import {
     faEdit, 
     faPlus, 
     faEnvelope, 
-    faArrowUp, 
     faPhone, 
     faBuilding, 
     faMapMarked, 
@@ -327,7 +326,7 @@ function ContactForm(props) {
             "age": Number(contactAge)
         }
 
-        if (!(contactName && contactPhone && companyPhone)) {
+        if (!(contactName === '' || contactPhone === '' || companyPhone === '')) {
             NotificationManager.error('Error message', 'Phone and name are required fields!');
             return setTimeout(() => window.location.reload(), 2000);
         }
@@ -368,7 +367,7 @@ function ContactForm(props) {
             "nemployees": Number(companyNEmployess)
         }
 
-        if (!(companyAddress && companyName && companyPhone)) {
+        if (!(companyAddress === '' || companyName === '' || companyPhone === '')) {
             NotificationManager.error('Error message', 'Address, name and phone are required fields!');
             return setTimeout(() => window.location.reload(), 2000);
         }
