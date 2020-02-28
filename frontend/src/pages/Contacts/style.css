@@ -227,6 +227,27 @@
     top: auto;
 }
 
+#search-form {
+    display: flex;
+}
+
+#search-form input {
+    border: 0;
+    border-bottom: 0.5px solid #a9afbbd1;
+    background-color: transparent;
+    color: #fff;
+    outline: none;
+}
+
+#search-form button {
+    border: 0;
+    background-color: #9095a2;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
 @media (max-width: 380px) {
     #sidebar ul li a {
         display: flex;
@@ -240,6 +261,15 @@
     #sidebar h3 {
         font-size: 18px;
         padding-top: 10px;
+    }
+    .contacts-header {
+        display: flex;
+        flex-direction: column;
+        margin-left: -50px;
+        align-items: center;
+    }
+    .contacts-header input {
+        margin-left: 20px;
     }
 }
 
@@ -259,6 +289,21 @@
         flex-direction: row;
         justify-content: space-around;
     }
-
+    .contacts-header {
+        display: flex;
+        flex-direction: column;
+        margin-left: -50px;
+        align-items: center;
+    }
+    .contacts-header i {
+        max-width: 40px;
+        max-height: 40px;
+        align-self: flex-end;
+        margin-top: 10px;
+        width: auto;
+    }
+    .contacts-header input {
+        align-self: flex-end;
+    }
 
 }

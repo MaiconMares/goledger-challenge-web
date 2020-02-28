@@ -12,7 +12,8 @@ import {
     faBuilding, 
     faMapMarked, 
     faSortNumericUpAlt,
-    faLink, 
+    faLink,
+    faSearch, 
 } from "@fortawesome/free-solid-svg-icons";
 import api from '../../services/api.js';
 import "./style.css";
@@ -24,6 +25,7 @@ function Contacts(props) {
     const [formEditIsOpen, setFormEditIsOpen] = useState(false);
     const [contactForm, setContactForm] = useState('');
     const [contactWillEdit, setContactWillEdit] = useState([]);
+    const [contactSearching, setContactSearching] = useState('');
 
     useEffect(() => {
         async function getContacts() {
@@ -80,6 +82,19 @@ function Contacts(props) {
         <div className="contacts">
             <div className="contacts-header">
                 <span>Contacts</span>
+                <div className="fieldset">
+                    <form onSubmit={(event) => event.preventDefault()} id="search-form">
+                        <input 
+                            type="text" 
+                            value={contactSearching} 
+                            id="search-bar"
+                            placeholder=" Search..."
+                            onChange={event => setContactSearching(event.target.value)}/>
+                        <button type="submit">
+                            <FontAwesomeIcon icon={faSearch}/>
+                        </button>
+                    </form>
+                </div>
                 <i onClick={() => setFormIsOpen(true)}>
                     <FontAwesomeIcon icon={faPlus}/>
                 </i>
@@ -89,7 +104,7 @@ function Contacts(props) {
                 <div className="simple-contacts">
                     <h4>Personal Contacts</h4>
                     <ul>
-                        {contacts.map(contact => (
+                        {contactSearching === '' ? contacts.map(contact => (
                             <li key={contact['@key']}>
                                 <div className="contact-info">
                                     <div className="contact-photo">
@@ -130,6 +145,50 @@ function Contacts(props) {
                                     </strong>
                                 </div>
                             </li>
+                        )) : 
+                        contacts.map(contact => (
+                            (contact.name === contactSearching) ? 
+                            <li key={contact['@key']}>
+                                    <div className="contact-info">
+                                        <div className="contact-photo">
+                                            <FontAwesomeIcon icon={faUser}/>
+                                        </div>
+                                        <div className="contact-info-text">
+                                            <strong>{contact.name}</strong>
+                                            <span>Age: {contact.age}</span>
+                                            <span>Phone: {contact.phone}</span>
+                                            <span>Email:  
+                                                {contact.email ? contact.email : ' não informado'}
+                                            </span>
+                                            <span>Company: {contact.company}</span>
+                                        </div>
+                                    </div>
+                                    <div className="contact-actions">
+                                        <strong onClick={() => handleFavorite(contact.name)}>
+                                            <i className="contact-actions-favorite">
+                                                { contact.favorite ? <i>&#9733;</i> : <i>&#9734;</i> }
+                                            </i>
+                                        </strong>
+                                        <span 
+                                            onClick={() => 
+                                            handleDelete(contact.name, "contact")}
+                                        >
+                                            <i className="contact-actions-delete">
+                                                <FontAwesomeIcon icon={faTrash}/>
+                                            </i>
+                                        </span>
+                                        <strong>
+                                                <i 
+                                                    className="contact-actions-edit"
+                                                    onClick={() => { setContactForm("contact-form"); 
+                                                                    setFormEditIsOpen(true);
+                                                                    setContactWillEdit(contact)}}>
+                                                    <FontAwesomeIcon icon={faEdit}/>
+                                                </i>
+                                        </strong>
+                                    </div>
+                            </li>
+                            : ''
                         ))}
                     </ul>
                 </div>
@@ -137,7 +196,7 @@ function Contacts(props) {
                 <div className="company-contacts">
                     <h4>Companies Contacts</h4>
                     <ul>
-                        {companies.map(company => (
+                        {contactSearching === '' ? companies.map(company => (
                             <li key={company['@key']}>
                                 <div className="contact-info">
                                     <div className="contact-photo">
@@ -177,6 +236,49 @@ function Contacts(props) {
                                     </strong>
                                 </div>
                             </li>
+                        )) : 
+                        companies.map(company => (
+                            (company.name === contactSearching) ?
+                                <li key={company['@key']}>
+                                    <div className="contact-info">
+                                        <div className="contact-photo">
+                                            <FontAwesomeIcon icon={faUser}/>
+                                        </div>
+                                        <div className="contact-info-text">
+                                            <strong>Name: {company.name}</strong>
+                                            <span>Phone: {company.number}</span>
+                                            <span>Address: {company.address}</span>
+                                            <span>Site: {company.site ? company.site : 'não informado'}</span>
+                                            <span>Number of employees: {company.nemployees}</span>
+                                        </div>
+                                    </div>
+                                    <div className="contact-actions">
+                                        <strong onClick={() => handleFavorite(company.name)}>
+                                            <i className="contact-actions-favorite">
+                                                { company.favorite ? <i>&#9733;</i> : <i>&#9734;</i> }
+                                            </i>
+                                        </strong>
+                                        <span 
+                                            onClick={() => 
+                                            handleDelete(company.name, "company")}
+                                        >
+                                            <i className="contact-actions-delete">
+                                                <FontAwesomeIcon icon={faTrash}/>
+                                            </i>
+                                        </span>
+                                        <strong className="contact-actions-edit">
+                                                <i 
+                                                    className="contact-actions-edit"
+                                                    onClick={() => { 
+                                                        setContactForm('company-form'); 
+                                                        setFormEditIsOpen(true); 
+                                                        setContactWillEdit(company)}}>
+                                                    <FontAwesomeIcon icon={faEdit}/>
+                                                </i>
+                                        </strong>
+                                    </div>
+                                </li>
+                            : ''
                         ))}
                     </ul>
                 </div>
