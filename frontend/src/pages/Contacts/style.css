@@ -248,6 +248,17 @@
     border-radius: 20px;
 }
 
+.form-interface #close-edit-form {
+    background-color: #913f9e;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    color: #fff;
+    border: 0;
+    margin-left: -200px;
+    margin-top: 20px;
+}
+
 @media (max-width: 380px) {
     #sidebar ul li a {
         display: flex;
@@ -270,6 +281,12 @@
     }
     .contacts-header input {
         margin-left: 20px;
+    }
+    .form-interface #close-edit-form {
+        margin-left: -150px;
+    }
+    .form-interface .fieldset button + button {
+        margin-left: 5px;
     }
 }
 

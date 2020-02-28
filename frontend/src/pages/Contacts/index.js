@@ -402,6 +402,9 @@ function ContactForm(props) {
             {isOpen ?
                 <div className="form-interface">
                     <div className="fieldset register-buttons">
+                        <button onClick={() => setTimeout(() => window.location.reload(), 500)}>
+                            &times;
+                        </button>
                         <button  
                             value="contact-form"
                             onClick={e => setFormType(e.target.value)}>Register Contact
@@ -668,6 +671,9 @@ function EditContact(props) {
     return (
         <>
           <div className="form-interface">
+                <div id="form-buttons">
+                    <button id="close-edit-form" onClick={() => setTimeout(() => window.location.reload(), 500)}>&times;</button>
+                </div>
                 <div className="save-contact-form">
                     {props.formType && (props.formType === "contact-form") 
                     ? 
