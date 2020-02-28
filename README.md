@@ -1,28 +1,36 @@
-# GoLedger Challenge
+# Git_Network
+## About
+An application built with ReactJS, HTML5, CSS3, Axios and other libraries. It's a responsive web application that works well in desktops and notebooks as also in mobile phones much small. The purpose of this app is win the GoLedger Challenge and learn more about software development.
+## Application working in image below.
+<img src="./frontend/src/assets/images/screen1.gif">
+<img src="./frontend/src/assets/images/screen2.gif">
+<h3>A responsive application made for large and small screens:</h3>
+<img src="./frontend/src/assets/images/screen3.gif">
 
-In this challenge you will create a web interface to a blockchain application. 
-In this application you must implement a simple phonebook.
+## Getting started
+### Prerequisites
 
-# Requirements
+1. Git
+2. Yarn: see <a href="https://classic.yarnpkg.com/en/docs/install/#windows-stable">yarn website for installation instructions</a>
+3. Node: any 12.x version starting with 12.0 or greater
+4. A fork of this repo
+5. ReactJS: see <a href="https://reactjs.org/docs/getting-started.html">ReactJS.org for installation in your local machine</a>
 
-- Your application should be able to add/remove/edit and show all current contacts.
+### Installation - frontend
+1. clone this repository.
+2. cd /frontend to go to the frontend directory.
+2. run **_yarn_** to install the npm dependencies
 
-- Use React for development (all UI libraries are allowed)
+### Running locally
+#### Frontend
+1. Inside /frontend directory, run **_yarn start_** to start the development server. After, automatically a web page will opened in your browser.
 
-## Instructions
-
-- Fork the repository https://github.com/goledgerdev/goledger-challenge-web
-
-  - Fork it, do **NOT** clone it, since you will need to send us your forked repository
-
-- Create an web application using React. You will implement the basic operations provided by the API, which are `Create`, `Update`, `Delete` and `Search`.
-
-- Improve your application with a beautiful UI.
-
-## Server
-
-The data are obtained using a rest server at this address: `http://ec2-100-27-2-255.compute-1.amazonaws.com/api/`
-
-Also, a Swagger with the endpoints specifications for the operations is provided at this address: `http://ec2-100-27-2-255.compute-1.amazonaws.com/api-docs/`
-
-To complete the challenge, you must send us the link to your forked repository with the code of your application. Please, provide instructions to execute the code.
+## Observations
+<div>
+  <p><i>:warning:</i> It's probably, sometimes, you will can't access imediatelly to data and you will need be patien, because some OPEN API's can take time to respond a request. But it takes seconds in the worst case.
+  </p>
+</div
+  
+<h2>Note</h2>
+<p>I will really enjoy if you fork my repository, make pull requests and give me tips about how I can improve my software engineering skills. Thanks GoLedger for this challenge!
+</p>
