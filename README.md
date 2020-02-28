@@ -38,5 +38,6 @@ An application built with ReactJS, HTML5, CSS3, Axios and other libraries. It's 
 </div
   
 <h2>Note</h2>
-<p>I will really enjoy if you fork my repository, make pull requests and give me tips about how I can improve my software engineering skills. Thanks GoLedger for this challenge!
+<p>- I will really enjoy if you fork my repository, make pull requests and give me tips about how I can improve my software engineering skills. Thanks GoLedger for this challenge!
 </p>
+<p>- There are simple documents about this application inside Wiki directory. If you are curious take a look!</p>
