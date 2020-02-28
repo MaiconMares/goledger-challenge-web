@@ -14,7 +14,6 @@ import {
     faSortNumericUpAlt,
     faLink, 
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
 import api from '../../services/api.js';
 import "./style.css";
 
@@ -22,7 +21,9 @@ function Contacts(props) {
     const [contacts, setContacts] = useState([]);
     const [companies, setCompanies] = useState([]);
     const [formIsOpen, setFormIsOpen] = useState(false);
-    const ContactFormElement = useRef();
+    const [formEditIsOpen, setFormEditIsOpen] = useState(false);
+    const [contactForm, setContactForm] = useState('');
+    const [contactWillEdit, setContactWillEdit] = useState([]);
 
     useEffect(() => {
         async function getContacts() {
@@ -73,11 +74,13 @@ function Contacts(props) {
 
     return (
         <>
-            {formIsOpen ? <ContactForm ref={ContactFormElement}/> : null}
+            {formIsOpen ? <ContactForm/> : null}
+            {formEditIsOpen ? 
+                <EditContact formType={contactForm} contactData={contactWillEdit}/> : null}
         <div className="contacts">
             <div className="contacts-header">
                 <span>Contacts</span>
-                <i onClick={() => setFormIsOpen(true) && ContactFormElement.current.handleVisibility()}>
+                <i onClick={() => setFormIsOpen(true)}>
                     <FontAwesomeIcon icon={faPlus}/>
                 </i>
             </div>
@@ -117,11 +120,13 @@ function Contacts(props) {
                                         </i>
                                     </span>
                                     <strong>
-                                        <Link to={`/edit_contact/${contact.name}`}>
-                                            <i className="contact-actions-edit">
+                                            <i 
+                                                className="contact-actions-edit"
+                                                onClick={() => { setContactForm("contact-form"); 
+                                                                setFormEditIsOpen(true);
+                                                                setContactWillEdit(contact)}}>
                                                 <FontAwesomeIcon icon={faEdit}/>
                                             </i>
-                                        </Link>
                                     </strong>
                                 </div>
                             </li>
@@ -161,11 +166,14 @@ function Contacts(props) {
                                         </i>
                                     </span>
                                     <strong className="contact-actions-edit">
-                                        <Link to={`/edit_contact/${company.name}`}>
-                                            <i className="contact-actions-edit">
+                                            <i 
+                                                className="contact-actions-edit"
+                                                onClick={() => { 
+                                                    setContactForm('company-form'); 
+                                                    setFormEditIsOpen(true); 
+                                                    setContactWillEdit(company)}}>
                                                 <FontAwesomeIcon icon={faEdit}/>
                                             </i>
-                                        </Link>
                                     </strong>
                                 </div>
                             </li>
@@ -421,6 +429,256 @@ function ContactForm(props) {
                     </div>
                 </div>
                 : null}
+        </>
+    );
+}
+
+function EditContact(props) {
+    const [loading, setLoading] = useState(false);
+
+    const [contactName, setContactName] = useState('');
+    const [contactPhone, setContactPhone] = useState('');
+    const [contactAge, setContactAge] = useState('');
+    const [contactEmail, setContactEmail] = useState('');
+    const [contactCompany, setContactCompany] = useState('');
+
+    const [companyName, setCompanyName] = useState('');
+    const [companyPhone, setCompanyPhone] = useState('');
+    const [companyAddress, setCompanyAddress] = useState('');
+    const [companySite, setCompanySite] = useState('');
+    const [companyNEmployess, setCompanyNEmployess] = useState('');
+
+    useEffect(() => {
+        if (props.contactData['@assetType'] === "contact") {
+            setContactName(props.contactData.name);
+            setContactPhone(props.contactData.phone);
+            setContactAge(props.contactData.age);
+            setContactEmail(props.contactData.email);
+            setContactCompany(props.contactData.contactCompany);
+        } else {
+            setCompanyName(props.contactData.name);
+            setCompanyPhone(props.contactData.phone);
+            setCompanyAddress(props.contactData.address);
+            setCompanySite(props.contactData.site);
+            setCompanyNEmployess(props.contactData.nemployees);
+        }
+    }, [props.formType])
+
+    async function handleSubmitContact(event) {
+        event.preventDefault();
+        setLoading(true);
+        
+        let data = {
+            "@assetType": "contact",
+            "name": contactName,
+            "phone": contactPhone,
+            "company": contactCompany,
+            "email": contactEmail,
+            "age": Number(contactAge)
+        }
+        try {
+            const response = await api.put('/update', data);
+            if (response.status === 200) {
+                setLoading(false);
+            } if (response.status === 409) {
+                throw {
+                    name: "Conflict in register",
+                    message: "This contact was already registered!"
+                }
+            }
+        } catch(error) {
+            console.log(error);
+            console.log('Problema!');
+            setLoading(false);
+        }
+
+        setTimeout(() => window.location.reload(), 500);
+    }
+
+    async function handleSubmitCompany(event) {
+        event.preventDefault();
+        setLoading(true);
+
+        let data = {
+            "@assetType": "company",
+            "address": companyAddress,
+            "name": companyName,
+            "number": companyPhone,
+            "site": companySite,
+            "nemployees": Number(companyNEmployess)
+        }
+
+        try {
+            const response = await api.put('/update', data);
+            if (response.status === 200) {
+                setLoading(false);
+                props.showChild = false;
+            } if (response.status === 409) {
+                throw {
+                    name: "Conflict in register",
+                    message: "This contact was already registered!"
+                }
+            }
+        } catch(error) {
+            console.log(error);
+            console.log('Problema!');
+            setLoading(false);
+            //Mostrar mensagem de erro.
+        }
+
+        setTimeout(() => window.location.reload(), 500);
+    }
+
+    return (
+        <>
+          <div className="form-interface">
+                <div className="save-contact-form">
+                    {props.formType && (props.formType === "contact-form") 
+                    ? 
+                    <form onSubmit={handleSubmitContact}>
+                        <div className="form-header">
+                            <FontAwesomeIcon icon={faUser} className="form-header-icon"/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faUser}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="contact-name" 
+                                id="contact-name" 
+                                placeholder="  Name"
+                                value={contactName}
+                                onChange={e => setContactName(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                 <FontAwesomeIcon icon={faPhone}/>
+                            </div>
+                             <input 
+                                type="text" 
+                                name="contact-phone" 
+                                id="contact-phone" 
+                                placeholder="  Phone"
+                                value={contactPhone} 
+                                onChange={e => setContactPhone(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faSortNumericUpAlt}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="contact-age" 
+                                id="contact-age" 
+                                placeholder="  Age"
+                                value={contactAge} 
+                                onChange={e => setContactAge(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faEnvelope}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="contact-email" 
+                                id="contact-email" 
+                                placeholder="  Email"
+                                value={contactEmail} 
+                                onChange={e => setContactEmail(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faBuilding}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="contact-company" 
+                                id="contact-company" 
+                                placeholder="  Contact Company"
+                                value={contactCompany} 
+                                onChange={e => setContactCompany(e.target.value)}/>
+                        </div>
+                        <button type="submit" className="form-submit">Save</button>
+                            {loading ? 
+                            <div className="spinner-save-contact">
+                                <Spinner radius={120} color={"#9e189e"} stroke={10} visible={true} />
+                            </div> 
+                            : null}
+                    </form> : 
+                    <form onSubmit={handleSubmitCompany}>
+                        <div className="form-header">
+                            <FontAwesomeIcon icon={faBuilding} className="form-header-icon"/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faUser}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="company-name" 
+                                id="company-name" 
+                                placeholder="  Name"
+                                value={companyName} 
+                                onChange={e => setCompanyName(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faMapMarked}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="company-address" 
+                                id="company-address" 
+                                placeholder="  Address"
+                                value={companyAddress} 
+                                onChange={e => setCompanyAddress(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faPhone}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="company-phone" 
+                                id="company-phone" 
+                                placeholder="  Phone"
+                                value={companyPhone} 
+                                onChange={e => setCompanyPhone(e.target.value)}/>
+                                </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faLink}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="company-site" 
+                                id="company-site" 
+                                placeholder="  Site"
+                                value={companySite} 
+                                onChange={e => setCompanySite(e.target.value)}/>
+                        </div>
+                        <div className="fieldset">
+                            <div className="form-icon">
+                                <FontAwesomeIcon icon={faSortNumericUpAlt}/>
+                            </div>
+                            <input 
+                                type="text" 
+                                name="company-nemployees"
+                                id="company-nemployees" 
+                                placeholder="  Number of employees"
+                                value={companyNEmployess} 
+                                onChange={e => setCompanyNEmployess(e.target.value)}/>
+                        </div>
+                        <button type="submit" className="form-submit">Save</button>
+                            {loading ? 
+                                <div className="spinner-save-contact">
+                                    <Spinner radius={120} color={"#9e189e"} stroke={10} visible={true} />
+                                </div> 
+                            : null}
+                    </form> }
+                </div>
+            </div>  
         </>
     );
 }
