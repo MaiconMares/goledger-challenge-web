@@ -1,4 +1,4 @@
-# Git_Network
+# GoBook
 ## About
 An application built with ReactJS, HTML5, CSS3, Axios and other libraries. It's a responsive web application that works well in desktops and notebooks as also in mobile phones much small. The purpose of this app is win the GoLedger Challenge and learn more about software development.
 ## Application working in image below.
